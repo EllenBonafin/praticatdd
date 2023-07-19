@@ -1,17 +1,13 @@
 class Money  { //superclass
    protected int amount;
 
-  public boolean equals(Object object)  {
+public boolean equals(Object object) { //verifica se as classes dos objetos comparados são iguais.
       Money money = (Money) object;
-      return amount == money.amount;
-}  
-class Dollar {
-    private amount;
-   Dollar(int amount) {
-      this.amount= amount;
+      return amount == money.amount && getClass().equals(money.getClass());
    }
-    Dollar times(int multiplier) {
-      amount= amount * multiplier;
+static Dollar {
+    static Money dollar(int amount)  {
+      return new Dollar(amount);
    }
 }	
 
@@ -23,26 +19,41 @@ public void testMultiplication() {
 
 
 public void testFrancMultiplication() {
-   Franc five = new Franc(5);
-   assertEquals(new Franc(10), five.times(2));
-   assertEquals(new Franc(15), five.times(3));
+    Money five = Money.franc(5);
+   assertEquals(Money.franc(10), five.times(2));
+   assertEquals(Money.franc(15), five.times(3));
 }
 
 class Franc {   
    private int amount;					
-   Franc(int amount) {      
-      this.amount= amount;
-    }					
-    Franc times(int multiplier)  {      
-       return new Franc(amount * multiplier);					
-    }   				
+    static Money franc(int amount) {
+      return new Franc(amount);
+    }  				
 }
 
-public void testEquality() {
-   assertTrue(new Dollar(5).equals(new Dollar(5)));
-   assertFalse(new Dollar(5).equals(new Dollar(6)));
-   assertTrue(new Franc(5).equals(new Franc(5)));
-   assertFalse(new Franc(5).equals(new Franc(6)));
+// public void testEquality() {
+//    assertTrue(new Dollar(5).equals(new Dollar(5)));
+//    assertFalse(new Dollar(5).equals(new Dollar(6)));
+//    assertTrue(new Franc(5).equals(new Franc(5)));
+//    assertFalse(new Franc(5).equals(new Franc(6)));
+//    assertFalse(new Franc(5).equals(new Dollar(5))); //comparação franc e dollar
+// }
+
+
+public void testEquality() { //novo teste 
+   assertTrue(Money.dollar(5).equals(Money.dollar(5)));
+   assertFalse(Money.dollar(5).equals(Money.dollar(6)));
+   assertTrue(Money.franc(5).equals(Money.franc(5)));
+   assertFalse(Money.franc(5).equals(Money.franc(6)));
+   assertFalse(Money.franc(5).equals(Money.dollar(5)));
 }
+
+public void testMultiplication() {
+   Money five = Money.dollar(5);
+   assertEquals(Money.dollar(10), five.times(2));
+   assertEquals(Money.dollar(15), five.times(3));
+}
+
+
 
 }
