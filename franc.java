@@ -1,8 +1,8 @@
 class franc extends money {   
-    franc(int amount) {      
-       this.amount= amount;
+    franc(int amount, String currency){      
+      super(amount, currency);
      }					
      money times(int multiplier)  {      
-        return new franc(amount * multiplier);					
+      return money.francs(amount * multiplier);					
      }   
  }
